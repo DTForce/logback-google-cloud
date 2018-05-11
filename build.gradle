@@ -1,0 +1,51 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+}
+
+plugins {
+	id "net.ltgt.apt" version "0.13"
+	id "io.spring.dependency-management" version "1.0.5.RELEASE"
+}
+
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+repositories {
+	mavenCentral()
+}
+
+sourceCompatibility = 1.8
+
+dependencyManagement {
+	dependencies{
+		dependency 'com.dtforce.suri:test-utils:1.0.0'
+		dependency 'com.google.code.gson:gson:2.8.2'
+		dependency 'ch.qos.logback:logback-classic:1.2.3'
+		dependency 'ch.qos.logback.contrib:logback-json-core:0.1.5'
+		dependency 'org.slf4j:slf4j-api:1.7.25'
+		dependency 'junit:junit:4.12'
+		dependency 'org.projectlombok:lombok:1.16.20'
+		dependency 'com.google.guava:guava:25.0-jre'
+		dependency 'org.assertj:assertj-core:3.9.1'
+	}
+}
+
+dependencies {
+	compile('com.google.code.gson:gson')
+	compile('ch.qos.logback:logback-classic')
+	compile('ch.qos.logback.contrib:logback-json-core')
+	compile('com.google.guava:guava')
+
+	// Lombok & Mapstruct
+	compileOnly('org.projectlombok:lombok')
+
+	testCompile('junit:junit')
+	testCompile('org.assertj:assertj-core')
+	testCompileOnly('org.projectlombok:lombok')
+}
+
+task sourceJar(type: Jar) {
+	from sourceSets.main.allJava
+}

@@ -1,0 +1,22 @@
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+
+	<appender name="TEST_APPENDER" class="com.dtforce.tools.logging.TestingAppender">
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="com.dtforce.tools.logging.GoogleCloudLoggingV2Layout">
+				<serviceName>@service-name@</serviceName>
+				<serviceVersion>@git.sha@</serviceVersion>
+				<jsonFormatter class="com.dtforce.tools.logging.GSONJsonFormatter"/>
+			</layout>
+		</encoder>
+	</appender>
+
+	<root level="TRACE">
+		<appender-ref ref="TEST_APPENDER" />
+	</root>
+
+	<!--<logger name="org.hibernate.SQL" level="DEBUG"/>-->
+	<logger name="com.dtforce.spring.webhook.service.notification" level="DEBUG"/>
+	<logger name="com.dtforce.suri.contract.service.logging.RestLoggingInterceptor.webHook" level="DEBUG"/>
+</configuration>
